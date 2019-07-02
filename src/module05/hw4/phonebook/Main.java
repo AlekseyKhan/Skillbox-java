@@ -10,9 +10,10 @@ public class Main {
     private static Pattern PHONENUMBER = Pattern.compile("^(7|8)(\\d{5})$");
     //для теста используются два слова с латинскими символами
     private static Pattern NAME = Pattern.compile("[A-Z]{1}[a-z]+\\s[A-Z]{1}[a-z]*$");
+    private static TreeMap<String, String> phoneBook = new TreeMap<>();
 
     public static void main(String[] args) {
-        TreeMap<String, String> phoneBook = new TreeMap<>();
+
         Scanner reader = new Scanner(System.in);
 
         for (; ; ) {
@@ -32,10 +33,10 @@ public class Main {
                     System.out.println("Книга пуста");
                 }
 
-            } else if (PHONENUMBER.matcher(input.replaceAll("\\D+", "")).matches()) {
+            } else if (isPhoneNumber(input.replaceAll("\\D+", ""))) {
                 String phoneNumber = input.replaceAll("\\D+", "");
                 if (phoneBook.containsValue(phoneNumber)) {
-                    System.out.printf("Найдено: %s - %s\n", findInBook(phoneBook, phoneNumber), phoneNumber);
+                    System.out.printf("Найдено: %s - %s\n", findNameByNumber(phoneNumber), phoneNumber);
                 } else {
                     System.out.println("Введите имя контакта:");
                     String contactName = reader.nextLine();
@@ -54,7 +55,7 @@ public class Main {
                         if (inputNumber.toUpperCase().equals("EXIT")) {
                             break;
                         }
-                        if (PHONENUMBER.matcher(inputNumber).matches()) {
+                        if (isPhoneNumber(inputNumber)) {
                             phoneBook.put(contactName, inputNumber);
                             break;
 
@@ -66,19 +67,26 @@ public class Main {
             } else {
                 System.out.println("Что-то пошло не так, повторите");
             }
-
         }
-
     }
 
-    private static String findInBook(TreeMap<String, String> map, String searchObject) {
+    private static String findNameByNumber(String searchObject) {
 
-        for (Map.Entry<String, String> pair : map.entrySet()) {
-            if (pair.getValue().equals(searchObject)) ;
-            return pair.getKey();
+        for (Map.Entry<String, String> pair : phoneBook.entrySet()) {
+            if (pair.getValue().equals(searchObject)) {
+                return pair.getKey();
+            }
         }
 
         return null;
+    }
+
+    private static boolean isPhoneNumber(String input) {
+        if (PHONENUMBER.matcher(input).matches()) {
+            return true;
+        }
+
+        return false;
     }
 
 }
