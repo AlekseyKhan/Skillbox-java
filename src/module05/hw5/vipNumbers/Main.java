@@ -1,4 +1,4 @@
-package module05.hw5;
+package module05.hw5.vipNumbers;
 
 import java.util.*;
 import java.util.regex.Pattern;
