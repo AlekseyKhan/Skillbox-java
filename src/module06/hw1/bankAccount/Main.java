@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         LocalDate lastDateOfDepo = LocalDate.of(2019,04,22);
-//        BankAccount account = new CardAccount();
+//        Account account = new CardAccount();
         BankAccount bankAccount = new BankAccount();
         DepositAccount depositAccount = new DepositAccount(lastDateOfDepo, 1000);
         CardAccount cardAccount = new CardAccount();
