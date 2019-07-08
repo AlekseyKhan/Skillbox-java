@@ -1,8 +1,8 @@
-package module06.hw2;
+package module06.hw3;
 
-import module06.hw2.person.Entity;
-import module06.hw2.person.Entrepreneur;
-import module06.hw2.person.Individual;
+import module06.hw3.person.Entity;
+import module06.hw3.person.Entrepreneur;
+import module06.hw3.person.Individual;
 
 public class Main {
     public static void main(String[] args) {
