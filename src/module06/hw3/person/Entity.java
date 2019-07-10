@@ -7,7 +7,7 @@ public class Entity extends Client {
     public boolean deposit(long sum) {
         if (isSumValid(sum)) {
             System.out.println("Пополнение " + sum);
-            setBalance(getBalance() + sum);
+            increaseAccount(sum);
             return true;
         } else {
             return printInvalidSum(sum);
@@ -28,7 +28,7 @@ public class Entity extends Client {
 
         if (getBalance() >= totalSum) {
             System.out.printf("Снятие %d. Комиссия %.1f%%. Итого к списанию: %d\n", amount, commission, totalSum);
-            setBalance(getBalance() - totalSum);
+            reduceAccount(totalSum);
             return true;
         } else {
             System.out.println("Недостаточно денег");

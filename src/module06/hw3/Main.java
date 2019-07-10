@@ -33,7 +33,7 @@ public class Main {
         System.out.println("\nПредприниматель");
         System.out.println("Баланс " + entrepreneur.getBalance());
         entrepreneur.deposit(-1);
-        entrepreneur.deposit(2000);
+        entrepreneur.deposit(1000);
         System.out.println("Баланс " + entrepreneur.getBalance());
         entrepreneur.deposit(100);
         System.out.println("Баланс " + entrepreneur.getBalance());

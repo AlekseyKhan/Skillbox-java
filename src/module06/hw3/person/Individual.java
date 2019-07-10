@@ -8,7 +8,7 @@ public class Individual extends Client {
             return printInvalidSum(sum);
         } else {
             System.out.println("Пополнение " + sum);
-            setBalance(getBalance() + sum);
+            increaseAccount(sum);
             return true;
         }
     }
@@ -21,7 +21,7 @@ public class Individual extends Client {
 
         if (getBalance() >= amount) {
             System.out.println("Снятие " + amount);
-            setBalance(getBalance() - amount);
+            reduceAccount(amount);
             return true;
         } else {
             System.out.println("Недостаточно денег");
