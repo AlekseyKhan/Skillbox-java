@@ -1,0 +1,68 @@
+package module06.hw4.company;
+
+import module06.hw4.company.staff.Operator;
+import module06.hw4.company.staff.SalesManager;
+import module06.hw4.company.staff.TopManager;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Company company = new Company();
+        long companyRevenue = 0;
+        long saleIncome = 200000;
+
+        //Создаем обычных продажников
+        for (int i = 0; i < 220; i++) {
+            long managerSalary = SalesManager.SALARY;
+            String managerName = "Manager " + (i + 1);
+
+            SalesManager manager = new SalesManager(managerName, managerSalary);
+            long income = (long) (Math.random() * saleIncome);
+            companyRevenue += income;
+
+            manager.calculateSalary(income);
+            company.hireEmployee(manager);
+
+        }
+
+        //Создаем операторов
+        for (int i = 0; i < 45; i++) {
+            long operatorSalary = Operator.SALARY;
+            String operatorName = "Operator " + (i + 1);
+
+            Operator operator = new Operator(operatorName, operatorSalary);
+            company.hireEmployee(operator);
+        }
+
+        //Топы
+        for (int i = 0; i < 5; i++) {
+            long topSalary = TopManager.SALARY;
+            String topName = "Top " + (i + 1);
+
+            TopManager top = new TopManager(topName, topSalary);
+            if (companyRevenue > 10000000) {
+                top.getBonus();
+            }
+            company.hireEmployee(top);
+        }
+
+        System.out.printf("Количество сотрудников: %d. Доход компании за месяц составил - %d\n",
+                company.getCountOfStaff(),
+                companyRevenue);
+
+        company.getTopSalaryStaff(20);
+        company.getLowestSalaryStaff(20);
+
+
+//        for(;;) {
+//            Scanner scanner = new Scanner(System.in);
+//            if (scanner.nextLine().equals("exit")) {
+//                return;
+//            }
+//            System.out.println(Math.random() * 10000);
+//
+//        }
+
+    }
+}
