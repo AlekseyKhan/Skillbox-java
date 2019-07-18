@@ -1,14 +1,14 @@
 package module06.hw4.company.staff;
 
 public class SalesManager implements Employee {
-    public static final int SALARY = 15500;
+    public static final int DEFAULT_SALARY = 15500;
     private final int INTEREST = 5;
     private long salary;
     private long totalSalary;
     private String name;
 
     public SalesManager() {
-        this("undefined", SALARY);
+        this("undefined", DEFAULT_SALARY);
     }
 
     public SalesManager(String name, long salary) {
@@ -23,24 +23,15 @@ public class SalesManager implements Employee {
     }
 
     @Override
-    public String getInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append(name)
-                .append(". Менеджер по продажам, оклад ").append(salary)
-                .append(" и плюс ").append(INTEREST)
-                .append("% от результата");
-
-        return info.toString();
-//        System.out.printf(
-//                "%s работает менеджером по продажам, оклад %d и плюс премия %d%% от результата\n",
-//                name, salary, INTEREST
-//        );
-
-    }
-
-    @Override
     public long getMonthSalary() {
         return totalSalary;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s. Менеджер по продажам, оклад %d и плюс %d%% от результата",
+                name, salary, INTEREST
+        );
+
+    }
 }

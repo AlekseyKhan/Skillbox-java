@@ -1,16 +1,16 @@
 package module06.hw4.company;
 
-import module06.hw4.company.staff.Employee;
-import module06.hw4.company.staff.Operator;
-import module06.hw4.company.staff.SalesManager;
-import module06.hw4.company.staff.TopManager;
+import module06.hw4.company.staff.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Company {
     private List<Employee> staff = new ArrayList<>();
+    private static SalaryStaffSequence sortedBy = null;
+    private long companyRevenue = 0;
 
     public boolean hireEmployee(Employee person) {
         if (!staff.contains(person)) {
@@ -33,43 +33,62 @@ public class Company {
     }
 
 
-    public long getTopSalaryStaff(int count) {
+    public void getTopSalaryStaff(int count) {
         if (count > staff.size()) {
             System.out.println("Запрос превышает кол-во сотрудников в штате");
-            return 1;
+            return;
         }
 
-        Collections.sort(staff, new SalaryComparator());
-        System.out.printf("Топ %d самых высокооплачиваемых сотрудников\n", count);
-        for (int i = 0; i < count; i++) {
-            System.out.printf("%d) Зарплата %d. Кто - %s\n",
-                    i + 1,
-                    staff.get(i).getMonthSalary(),
-                    staff.get(i).getInfo());
-        }
+        sortStaffSalary(SalaryStaffSequence.Increasing);
+        showSortedStaffSalary(count, sortedBy);
 
-        return 0;
     }
 
-    public long getLowestSalaryStaff(int count) {
+    public void getLowestSalaryStaff(int count) {
         if (count > staff.size()) {
             System.out.println("Запрос превышает кол-во сотрудников в штате");
-            return 1;
+            return;
         }
 
-        Collections.sort(staff, new SalaryComparator("decreasing"));
-        System.out.printf("Топ %d самых низкооплачиваемых сотрудников\n", count);
-        for (int i = 0; i < count; i++) {
-            System.out.printf("%d) Зарплата %d. Кто - %s\n",
-                    i + 1,
-                    staff.get(i).getMonthSalary(),
-                    staff.get(i).getInfo());
-        }
-        return 0;
+        sortStaffSalary(SalaryStaffSequence.Decreasing);
+        showSortedStaffSalary(count, sortedBy);
+
     }
 
     public int getCountOfStaff() {
         return staff.size();
+    }
+
+    private void sortStaffSalary(SalaryStaffSequence sequence) {
+        if (sortedBy == null) {
+            Collections.sort(staff, new SalaryComparator(sequence));
+            sortedBy = sequence;
+        } else if (!sortedBy.equals(sequence)) {
+            Collections.reverse(staff);
+            sortedBy = sequence;
+        }
+    }
+
+    private void showSortedStaffSalary(int count, SalaryStaffSequence sequence) {
+        String s = sequence.equals(SalaryStaffSequence.Increasing) ?
+                String.format("Топ %d самых высокооплачиваемых сотрудников", count) :
+                String.format("Топ %d самых низкооплачиваемых сотрудников", count);
+
+        System.out.println(s);
+        for (int i = 0; i < count; i++) {
+            System.out.printf("%d) Зарплата %d. Кто - %s\n",
+                    i + 1,
+                    staff.get(i).getMonthSalary(),
+                    staff.get(i));
+        }
+    }
+
+    public long getCompanyRevenue() {
+        return companyRevenue;
+    }
+
+    public void increaseCompanyRevenue(long income) {
+        this.companyRevenue += income;
     }
 
 }

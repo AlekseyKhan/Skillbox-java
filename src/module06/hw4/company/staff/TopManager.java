@@ -1,14 +1,17 @@
 package module06.hw4.company.staff;
 
+import module06.hw4.company.Company;
+
 public class TopManager implements Employee {
-    public static final long SALARY = 50000;
+    public static final long DEFAULT_SALARY = 50000;
+    public static final long THRESHOLD_FOR_AWARD = 10000000;
     private final int INTEREST = 100;
     private long salary;
     private String name;
     private long totalSalary;
 
     public TopManager() {
-        this("undefined", SALARY);
+        this("undefined", DEFAULT_SALARY);
     }
 
     public TopManager(String name, long salary) {
@@ -17,29 +20,22 @@ public class TopManager implements Employee {
         this.totalSalary = salary;
     }
 
-    public void getBonus() {
-        long bonus = (long) Math.round(salary * INTEREST / 100);
-        totalSalary = salary + bonus;
-    }
-
-    @Override
-    public String getInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append(name)
-                .append(". Топ-менеджер, фиксированный оклад - ").append(salary)
-                .append(" и премия, если доход компании будет свыше 10млн руб, составляет ").append(INTEREST)
-                .append("% от оклада");
-
-        return info.toString();
-
-//        System.out.printf(
-//                "%s является топ-менеджером с окладом %d и премией %d%% от оклада, если доход компании будет свыше 10млн руб\n",
-//                name, salary, INTEREST
-//        );
+    public void calculateBonus(Company company) {
+        if (company.getCompanyRevenue() > THRESHOLD_FOR_AWARD) {
+            long bonus = (long) Math.round(salary * INTEREST / 100);
+            totalSalary = salary + bonus;
+        }
     }
 
     @Override
     public long getMonthSalary() {
         return totalSalary;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s. Топ-менеджер, фиксированный оклад - %d и премия, если доход компании будет свыше %d, составляет %d%% от оклада",
+                name, salary, THRESHOLD_FOR_AWARD, INTEREST
+        );
     }
 }
