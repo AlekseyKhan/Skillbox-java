@@ -44,20 +44,10 @@ public class Main {
 
         System.out.printf("Количество сотрудников: %d. Доход компании за месяц составил - %d\n",
                 company.getCountOfStaff(),
-                companyRevenue);
+                company.getCompanyRevenue());
 
         company.getTopSalaryStaff(20);
         company.getLowestSalaryStaff(20);
-
-
-//        for(;;) {
-//            Scanner scanner = new Scanner(System.in);
-//            if (scanner.nextLine().equals("exit")) {
-//                return;
-//            }
-//            System.out.println(Math.random() * 10000);
-//
-//        }
 
     }
 }

@@ -19,13 +19,6 @@ public class SalaryComparator implements Comparator<Employee> {
     @Override
     public int compare(Employee o1, Employee o2) {
         int sign = sequence.equals(SalaryStaffSequence.Increasing) ? 1 : -1;
-
         return sign * Long.compare(o2.getMonthSalary(), o1.getMonthSalary());
-
-//        if (o1.getMonthSalary() == o2.getMonthSalary()) {
-//            return 0;
-//        } else {
-//            return o1.getMonthSalary() > o2.getMonthSalary() ? (-1) * sign : sign;
-//        }
     }
 }
