@@ -48,7 +48,7 @@ public class Company {
     }
 
     private void showSortedStaffSalary(List staff, int count, SalaryStaffSequence sequence) {
-        List<Employee> sortedStaff = staff;
+        List<Employee> sortedStaff = new ArrayList<>(staff);
 
         System.out.println(sequence.equals(SalaryStaffSequence.Increasing) ?
                 String.format("Топ %d самых высокооплачиваемых сотрудников", count) :
@@ -61,6 +61,13 @@ public class Company {
                     i + 1,
                     sortedStaff.get(i).getMonthSalary(),
                     sortedStaff.get(i));
+        }
+
+        for (int i = 0; i < count; i++) {
+            System.out.printf("%d) Зарплата %d. Кто - %s\n",
+                    i + 1,
+                    this.staff.get(i).getMonthSalary(),
+                    this.staff.get(i));
         }
     }
 
