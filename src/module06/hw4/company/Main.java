@@ -7,7 +7,6 @@ import module06.hw4.company.staff.TopManager;
 public class Main {
     public static void main(String[] args) {
         Company company = new Company();
-        long companyRevenue = 0;
         long saleIncome = 200000;
 
         //Создаем обычных продажников

@@ -2,33 +2,25 @@ package module06.hw4.company;
 
 import module06.hw4.company.staff.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Company {
     private List<Employee> staff = new ArrayList<>();
-    private static SalaryStaffSequence sortedBy = null;
     private long companyRevenue = 0;
 
-    public boolean hireEmployee(Employee person) {
+    public void hireEmployee(Employee person) {
         if (!staff.contains(person)) {
             staff.add(person);
-            return true;
         } else {
             System.out.println("Сотрудник уже существует");
-            return false;
         }
     }
 
-    public boolean fireEmployee(Employee person) {
+    public void fireEmployee(Employee person) {
         if (staff.contains(person)) {
             staff.remove(person);
-            return true;
         } else {
             System.out.println("Сотрудник не найден");
-            return false;
         }
     }
 
@@ -38,9 +30,7 @@ public class Company {
             System.out.println("Запрос превышает кол-во сотрудников в штате");
             return;
         }
-
-        sortStaffSalary(SalaryStaffSequence.Increasing);
-        showSortedStaffSalary(count, sortedBy);
+        showSortedStaffSalary(staff, count, SalaryStaffSequence.Increasing);
 
     }
 
@@ -49,9 +39,7 @@ public class Company {
             System.out.println("Запрос превышает кол-во сотрудников в штате");
             return;
         }
-
-        sortStaffSalary(SalaryStaffSequence.Decreasing);
-        showSortedStaffSalary(count, sortedBy);
+        showSortedStaffSalary(staff, count, SalaryStaffSequence.Decreasing);
 
     }
 
@@ -59,27 +47,20 @@ public class Company {
         return staff.size();
     }
 
-    private void sortStaffSalary(SalaryStaffSequence sequence) {
-        if (sortedBy == null) {
-            Collections.sort(staff, new SalaryComparator(sequence));
-            sortedBy = sequence;
-        } else if (!sortedBy.equals(sequence)) {
-            Collections.reverse(staff);
-            sortedBy = sequence;
-        }
-    }
+    private void showSortedStaffSalary(List staff, int count, SalaryStaffSequence sequence) {
+        List<Employee> sortedStaff = staff;
 
-    private void showSortedStaffSalary(int count, SalaryStaffSequence sequence) {
-        String s = sequence.equals(SalaryStaffSequence.Increasing) ?
+        System.out.println(sequence.equals(SalaryStaffSequence.Increasing) ?
                 String.format("Топ %d самых высокооплачиваемых сотрудников", count) :
-                String.format("Топ %d самых низкооплачиваемых сотрудников", count);
+                String.format("Топ %d самых низкооплачиваемых сотрудников", count));
 
-        System.out.println(s);
+        Collections.sort(sortedStaff, new SalaryComparator(sequence));
+
         for (int i = 0; i < count; i++) {
             System.out.printf("%d) Зарплата %d. Кто - %s\n",
                     i + 1,
-                    staff.get(i).getMonthSalary(),
-                    staff.get(i));
+                    sortedStaff.get(i).getMonthSalary(),
+                    sortedStaff.get(i));
         }
     }
 
